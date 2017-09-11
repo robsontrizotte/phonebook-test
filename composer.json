@@ -1,0 +1,11 @@
+{
+    "name": "robson.trizotte/phonebook",
+    "description": "Phonebook with PHP and Bootstrap",
+    "authors": [
+        {
+            "name": "Robson Trizotte",
+            "email": "robson.trizotte@gmail.com"
+        }
+    ],
+    "require": {}
+}
