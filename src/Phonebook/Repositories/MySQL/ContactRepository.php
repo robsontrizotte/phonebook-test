@@ -13,7 +13,7 @@ use Phonebook\Repositories\Contracts\ContactRepositoryInterface;
  * @package Phonebook\Repositories\MySQL
  * @author Robson Trizotte <robson.trizotte@gmail.com>
  */
-class ContactRepository implements ContactRepositoryInterface
+class ContactRepository extends Repository implements ContactRepositoryInterface
 {
 
     /**

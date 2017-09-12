@@ -1,0 +1,3 @@
+<?php
+
+$d = \ServiceContainer::getContactManager();

@@ -7,5 +7,10 @@
             "email": "robson.trizotte@gmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    }
 }

@@ -1,5 +1,4 @@
 <?php
-namespace Phonebook;
 
 use Phonebook\Services\ContactManager;
 
@@ -15,13 +14,17 @@ final class ServiceContainer
     private static $instantiatedMap = [];
 
     private static $map = [
+        'config' => \Config::class,
         'contact.manager' => ContactManager::class,
-        'contact.repository' => Repositories\MySQL\ContactRepository::class
+        'contact.repository' => Phonebook\Repositories\MySQL\ContactRepository::class
     ];
 
     private static $dependency = [
         'contact.manager' => [
             'contact.repository'
+        ],
+        'contact.repository' => [
+            'config'
         ]
     ];
 
@@ -54,7 +57,7 @@ final class ServiceContainer
                 $dependencies[] = static::get($dependency);
             }
         }
-        $reflection = new ReflectionClass($class);
+        $reflection = new \ReflectionClass($class);
         if (count($dependencies)) {
             $instance = $reflection->newInstanceArgs($dependencies);
         } else {
