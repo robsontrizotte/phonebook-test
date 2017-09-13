@@ -1,5 +1,7 @@
 <?php
 
+namespace App;
+
 /**
  * Class Config
  * @package Phonebook
@@ -28,7 +30,7 @@ final class Config
         if (isset(static::$loadedFiles[$filename])) {
             return ;
         }
-        $path = realpath(__DIR__ . '/../app/config');
+        $path = realpath(__DIR__ . '/../../app/config');
         if (!file_exists($path . '/' . $filename . '.php')) {
             return ;
         }

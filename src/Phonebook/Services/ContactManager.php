@@ -96,4 +96,9 @@ class ContactManager extends Service
         return $numbers;
     }
 
+    public function listAll()
+    {
+        return $this->repository->findAll();
+    }
+
 }

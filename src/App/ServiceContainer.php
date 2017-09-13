@@ -1,5 +1,9 @@
 <?php
 
+namespace App;
+
+use App\Http\View\Twig;
+use Phonebook\Repositories\MySQL\ContactRepository;
 use Phonebook\Services\ContactManager;
 
 /**
@@ -13,13 +17,14 @@ final class ServiceContainer
      */
     private static $instantiatedMap = [];
 
-    private static $map = [
-        'config' => \Config::class,
+    private $map = [
+        'config' => Config::class,
         'contact.manager' => ContactManager::class,
-        'contact.repository' => Phonebook\Repositories\MySQL\ContactRepository::class
+        'contact.repository' => ContactRepository::class,
+        'view' => Twig::class
     ];
 
-    private static $dependency = [
+    private $dependency = [
         'contact.manager' => [
             'contact.repository'
         ],
@@ -32,29 +37,29 @@ final class ServiceContainer
      * @param string $id
      * @return mixed
      */
-    public static function get($id)
+    public function get($id)
     {
         $id = strtolower($id);
-        if (!isset(static::$map[$id])) {
+        if (!isset($this->map[$id])) {
             return null;
         }
         if (isset(static::$instantiatedMap[$id])) {
             return static::$instantiatedMap[$id];
         }
-        return static::instantiate($id);
+        return $this->instantiate($id);
     }
 
     /**
      * @param string $id
      * @return object
      */
-    private static function instantiate($id)
+    private function instantiate($id)
     {
         $dependencies = [];
-        $class = static::$map[$id];
-        if (isset(static::$dependency[$id])) {
-            foreach (static::$dependency[$id] as $dependency) {
-                $dependencies[] = static::get($dependency);
+        $class = $this->map[$id];
+        if (isset($this->dependency[$id])) {
+            foreach ($this->dependency[$id] as $dependency) {
+                $dependencies[] = $this->get($dependency);
             }
         }
         $reflection = new \ReflectionClass($class);
@@ -65,13 +70,5 @@ final class ServiceContainer
         }
         static::$instantiatedMap[$id] = $instance;
         return $instance;
-    }
-
-    /**
-     * @return ContactManager
-     */
-    public static function getContactManager()
-    {
-        return static::get('contact.manager');
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Phonebook\Repositories\MySQL;
 
-use \Config;
+use App\Config;
 use Phonebook\Exceptions\ConnectionDatabaseException;
 
 /**
@@ -15,7 +15,7 @@ abstract class Repository
     /**
      * @var \PDO
      */
-    private $connection;
+    protected $connection;
 
     /**
      * @var Config
@@ -35,6 +35,7 @@ abstract class Repository
     {
         $this->config = $config;
         $this->loadSettings();
+        $this->connect();
     }
 
     /**
