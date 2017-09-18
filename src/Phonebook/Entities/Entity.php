@@ -2,6 +2,8 @@
 
 namespace Phonebook\Entities;
 
+use Phonebook\Collections\Collection;
+
 /**
  * Class Entity
  * @package Phonebook\Entities
@@ -14,6 +16,12 @@ abstract class Entity
      */
     public function toArray()
     {
-        return get_object_vars($this);
+        $properties = get_object_vars($this);
+        foreach ($properties as $prop => $value) {
+            if ($value instanceof Entity || $value instanceof Collection) {
+                $properties[$prop] = $value->toArray();
+            }
+        }
+        return $properties;
     }
 }

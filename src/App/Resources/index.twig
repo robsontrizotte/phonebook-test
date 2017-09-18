@@ -6,6 +6,8 @@
             <h1>Contacts</h1>
         </div>
         <div class="contact-list">
+            <a href="/new" class="btn btn-primary add" role="button">Add New</a>
+            {% if contacts | length > 0 %}
             <table class="table table-striped table-hover table-bordered">
                 <thead>
                     <tr>
@@ -16,41 +18,36 @@
                         <th class="contact-actions">&nbsp;</th>
                     </tr>
                 </thead>
+                {% if contacts is iterable %}
                 <tbody>
+                    {% for contact in contacts %}
                     <tr>
-                        <th scope="row"><a href="#">1</a></th>
-                        <td><a href="#">Name</a></td>
-                        <td>Email</td>
-                        <td>Phones</td>
+                        <th scope="row"><a href="/show/{{ contact.id }}">{{ contact.id }}</a></th>
+                        <td><a href="/show/{{ contact.id }}">{{ contact.name }}</a></td>
+                        <td>{{ contact.email }}</td>
+                        <td>{{ contact.number }}</td>
                         <td class="contact-actions">
-                            <button type="button" class="btn btn-xs btn-default">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                            </button>
-                            <button type="button" class="btn btn-xs btn-danger">
+                            <button type="button" class="btn btn-xs btn-danger btn-remove" data-contact="{{ contact.id }}">
                                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                             </button>
                         </td>
                     </tr>
-                    <tr>
-                        <th scope="row">#</th>
-                        <td>Name</td>
-                        <td>Email</td>
-                        <td>Phones</td>
-                        <td>&nbsp;</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">#</th>
-                        <td>Name</td>
-                        <td>Email</td>
-                        <td>Phones</td>
-                        <td>&nbsp;</td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
+                {% endif %}
             </table>
+            {% else %}
+                <div class="alert alert-warning no-contact">
+                    No contact available
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
 
 {% block assets_css %}
-    <link rel="stylesheet" href="/assets/home.css" />
+    <link rel="stylesheet" href="/assets/css/home.css" />
+{% endblock %}
+{% block assets_js %}
+    <script type="text/javascript" src="/assets/js/home.js"></script>
 {% endblock %}

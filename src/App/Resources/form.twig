@@ -1,0 +1,93 @@
+{% extends 'base.twig' %}
+
+{% block content %}
+    <div class="form-template">
+        <div class="title">
+            <h1>Titulo</h1>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="contact-form">
+                        <form role="form" id="form-contact" method="post" action="/save">
+                            {% if contact.id > 0 %}
+                            <legend>Edit Contact #{{ contact.id }}</legend>
+                            <input type="hidden" name="id" value="{{ contact.id }}" />
+                            {% else %}
+                            <legend>New Contact</legend>
+                            {% endif %}
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" class="form-control" id="name" name="name" required="required" aria-required="true" value="{{ contact.name }}" />
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" aria-required="true" class="form-control" required="required" name="email" id="email" placeholder="Email"
+                                       aria-describedby="email-input" value="{{ contact.email }}" >
+                            </div>
+                            <div class="form-group label-numbers">
+                                <label for="">Numbers:</label>
+                            </div>
+                            {% if contact.numbers is iterable and contact.numbers | length > 0 %}
+                                {% for number in contact.numbers %}
+                                    <div class="number-input input-group col-xs-6">
+                                        <input class="form-control intl-phone" date-rule-validIntlPhone="true" name="number[]" type="text" value="{{ number.number }}" placeholder="Phone" required="required" aria-required="true" />
+                                        <select name="type[]" class="form-control">
+                                            <option value="cell" {{ number.type | lower == 'cell' ? 'selected="selected"' }}>Cellphone</option>
+                                            <option value="home" {{ number.type | lower == 'home' ? 'selected="selected"' }}>Home</option>
+                                            <option value="commercial" {{ number.type | lower == 'commercial' ? 'selected="selected"' }}>Commercial</option>
+                                        </select>
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-success btn-add" type="button">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
+                                    </span>
+                                    </div>
+
+                                {% endfor %}
+                            {% else %}
+                            <div class="number-input input-group col-xs-6">
+                                <input class="form-control intl-phone" date-rule-validIntlPhone="true" name="number[]" type="text" placeholder="Phone" required="required" aria-required="true" />
+                                <select name="type[]" class="form-control">
+                                    <option value="cell">Cellphone</option>
+                                    <option value="home">Home</option>
+                                    <option value="commercial">Commercial</option>
+                                </select>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-success btn-add" type="button">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+                            {% endif %}
+
+                            <div class="row actions">
+                                <div class="col-md-12">
+                                    <button class="btn btn-default btn-cancel" type="button">
+                                        Cancel
+                                    </button>
+                                    <button class="btn btn-primary" type="submit">
+                                        Submit
+                                    </button>
+                                    {% if contact.id > 0 %}
+                                    <button class="btn btn-primary btn-danger btn-remove pull-right" data-contact="{{ contact.id }}">
+                                        Remove
+                                    </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block assets_css %}
+    <link rel="stylesheet" href="/assets/css/form.css" />
+{% endblock %}
+{% block assets_js %}
+    <script type="text/javascript" src="/assets/js/form.js"></script>
+{% endblock %}

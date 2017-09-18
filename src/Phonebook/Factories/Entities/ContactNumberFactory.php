@@ -14,8 +14,8 @@ class ContactNumberFactory
     public static function fromArray(array $data)
     {
         $type = array_keys($data)[0];
-        if ($type !== ContactNumber::TYPE_CELLPHONE ||
-            $type !== ContactNumber::TYPE_COMMERCIAL ||
+        if ($type !== ContactNumber::TYPE_CELLPHONE &&
+            $type !== ContactNumber::TYPE_COMMERCIAL &&
             $type !== ContactNumber::TYPE_HOME) {
             throw new InvalidArgumentsException(sprintf('Invalid number type [%s]', $type), 401);
         }

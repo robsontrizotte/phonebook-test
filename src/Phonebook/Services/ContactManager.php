@@ -8,6 +8,7 @@ use Phonebook\Exceptions\InvalidArgumentsException;
 use Phonebook\Factories\Collections\ContactNumberCollectionFactory;
 use Phonebook\Factories\Entities\ContactFactory;
 use Phonebook\Repositories\Contracts\ContactRepositoryInterface;
+use Phonebook\Tools\Arguments;
 
 /**
  * Class ContactManager
@@ -36,7 +37,7 @@ class ContactManager extends Service
      */
     public function createContact(array $contact)
     {
-        $this->validArguments(['name', 'email'], $contact);
+        Arguments::validArguments(['name', 'email'], $contact);
         $numbers = $this->getNumbers($contact);
         unset($contact['numbers']);
         unset($contact['number']);
@@ -96,9 +97,27 @@ class ContactManager extends Service
         return $numbers;
     }
 
+    /**
+     * @return \Phonebook\Collections\ContactCollection
+     */
     public function listAll()
     {
         return $this->repository->findAll();
+    }
+
+    /**
+     * @param int $id
+     * @return Contact
+     */
+    public function get($id)
+    {
+        if (empty($id)) {
+            throw new InvalidArgumentsException("Contact id is empty.", 400);
+        }
+        if (!is_int($id)) {
+            throw new InvalidArgumentsException("Contact id is invalid.", 400);
+        }
+        return $this->repository->find($id);
     }
 
 }

@@ -94,4 +94,22 @@ class Contact extends Entity
     {
         $this->email = $email;
     }
+
+    /**
+     * @return string
+     */
+    public function getNumber()
+    {
+        $number = '';
+        if (count($this->getNumbers())) {
+            $numbers = [];
+            /** @var ContactNumber $number */
+            foreach ($this->getNumbers() as $contactNumber) {
+                $numbers[] = $contactNumber->getNumber();
+            }
+            $number = implode(', ', $numbers);
+        }
+
+        return $number;
+    }
 }

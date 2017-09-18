@@ -1,0 +1,39 @@
+.number-input:not(:first-of-type) {
+    margin-top: 10px;
+}
+.label-numbers {
+    margin-bottom: -7px;
+}
+.actions {
+    margin-top: 20px;
+}
+
+.number-input input.form-control {
+    /*width: 55%;*/
+    display: inline-block;
+}
+.number-input select.form-control {
+     width: 30%;
+    /*display: inline-block;*/
+ }
+.number-input .input-group-btn {
+    display: inline-block;
+}
+.number-input .glyphicon {
+    font-size: 12px;
+}
+label.error {
+    color: #a94442;
+    font-weight: 500;
+    font-size: 12px;
+}
+input.error {
+    border: 1px solid #a94442;
+}
+.flag-container {
+    z-index: 4;
+    height: 34px;
+}
+.intl-tel-input {
+    float: left;
+}

@@ -10,3 +10,9 @@ div.contact-list table .contact-actions {
     width: 80px;
     text-align: center;
 }
+div.contact-list .add {
+    margin-bottom: 10px;
+}
+.no-contact {
+    text-align: center;
+}

@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\View\Twig;
 use App\ServiceContainer;
 use Phonebook\Services\ContactManager;
-use Psr\Http\Message\ResponseInterface;
 use Zend\Diactoros\Response\HtmlResponse;
+use Zend\Diactoros\Response\JsonResponse;
 
 /**
  * Class BaseController
  * @package App\Http\Controllers
- * @author Robson Trizotte <robson.trizotte@rentcars.com>
+ * @author Robson Trizotte <robson.trizotte@gmail.com>
  */
 abstract class Controller
 {
@@ -49,6 +49,17 @@ abstract class Controller
     protected function response($data, $status = 200, array $headers = [])
     {
         return new HtmlResponse($data, $status, $headers);
+    }
+
+    /**
+     * @param $data
+     * @param int $status
+     * @param array $headers
+     * @return JsonResponse
+     */
+    protected function json($data, $status = 200, array $headers = [])
+    {
+        return new JsonResponse($data, $status, $headers);
     }
 
     /**
