@@ -1,6 +1,12 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
 
+//Fix Windows SapCli static resources
+if (php_sapi_name() === 'cli-server' && strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+    if (preg_match('/\.(?:png|jpg|jpeg|gif|css|js)$/', $_SERVER["REQUEST_URI"])) {
+        return false;
+    }
+}
 $router = new \App\Http\Router();
 
 $router->collection()->map('GET', '/', 'App\Http\Controllers\ContactController::index');
@@ -19,7 +25,6 @@ $router->collection()->map('PUT', '/api/{id}', 'Api\Http\Controllers\ApiContactC
 try {
     $router->dispatch();
 } catch (\Exception $e) {
-    var_dump($e);die;
     header('Content-Type: application/json');
     http_response_code($e->getCode());
     $data = ['error' => $e->getMessage()];
